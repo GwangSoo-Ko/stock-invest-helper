@@ -1,5 +1,7 @@
 
 import React, { useState } from 'react';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import { getDeepDiveAnalysis } from '../services/geminiService';
 import LoadingSpinner from './shared/LoadingSpinner';
 
@@ -61,7 +63,10 @@ const DeepDive: React.FC = () => {
 
             {result && (
                 <div className="bg-gray-800 p-4 rounded-lg">
-                    <div className="prose prose-invert max-w-none text-gray-200 whitespace-pre-wrap">{result}</div>
+                     <div 
+                        className="prose prose-invert max-w-none text-gray-200"
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked(result) as string) }}
+                    />
                 </div>
             )}
         </div>

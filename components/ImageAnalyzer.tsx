@@ -1,5 +1,7 @@
 
 import React, { useState, useRef } from 'react';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import { analyzeImage, fileToBase64 } from '../services/geminiService';
 import LoadingSpinner from './shared/LoadingSpinner';
 
@@ -87,7 +89,10 @@ const ImageAnalyzer: React.FC = () => {
 
             {result && (
                 <div className="bg-gray-800 p-4 rounded-lg mt-6">
-                    <div className="prose prose-invert max-w-none text-gray-200 whitespace-pre-wrap">{result}</div>
+                    <div 
+                        className="prose prose-invert max-w-none text-gray-200"
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked(result) as string) }}
+                    />
                 </div>
             )}
         </div>

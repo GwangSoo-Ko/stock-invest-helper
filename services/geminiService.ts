@@ -22,7 +22,7 @@ export const fileToBase64 = (file: File): Promise<string> => {
 export const getMarketAnalysis = async (prompt: string): Promise<MarketAnalysisResult> => {
     try {
         const response: GenerateContentResponse = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
+            model: "gemini-2.5-pro",
             contents: prompt,
             config: {
                 tools: [{ googleSearch: {} }],
@@ -50,7 +50,7 @@ export const analyzeImage = async (prompt: string, imageBase64: string, mimeType
         const textPart = { text: prompt };
 
         const response: GenerateContentResponse = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
+            model: 'gemini-2.5-pro',
             contents: { parts: [imagePart, textPart] },
         });
 

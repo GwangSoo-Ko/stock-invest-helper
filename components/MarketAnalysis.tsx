@@ -1,5 +1,7 @@
 
 import React, { useState } from 'react';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 import { getMarketAnalysis } from '../services/geminiService';
 import type { GroundingChunk } from '../types';
 import LoadingSpinner from './shared/LoadingSpinner';
@@ -58,7 +60,10 @@ const MarketAnalysis: React.FC = () => {
 
             {result && (
                 <div className="bg-gray-800 p-4 rounded-lg space-y-4">
-                    <div className="prose prose-invert max-w-none text-gray-200 whitespace-pre-wrap">{result.text}</div>
+                    <div 
+                        className="prose prose-invert max-w-none text-gray-200"
+                        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(marked(result.text) as string) }} 
+                    />
                     {result.sources && result.sources.length > 0 && (
                         <div>
                             <h3 className="text-lg font-semibold text-gray-300 mb-2">출처</h3>
